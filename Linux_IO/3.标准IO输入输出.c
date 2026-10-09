@@ -13,6 +13,7 @@
  *
  *
  */
+void cpy_file();
 int main() {
   // 标准IO
   printf("getchar() 的测试：");
@@ -36,6 +37,18 @@ int main() {
     fprintf(stdout, "%c", (char)flag);
   }
   fclose(fp);
+  cpy_file();
   return 0;
-  ;
+}
+
+void cpy_file() {
+  FILE *fp_cpy = fopen("file/test_cpy", "w");
+  FILE *fp = fopen("file/test.txt", "r");
+  int flag = 0;
+  while ((flag = fgetc(fp)) != EOF) {
+    // fprintf(fp_cpy, "%c", (char)flag);
+    putc((char)flag, fp_cpy);
+  }
+  fclose(fp);
+  fclose(fp_cpy);
 }

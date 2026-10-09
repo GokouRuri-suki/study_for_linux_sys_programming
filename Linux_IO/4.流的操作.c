@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <time.h>
+#include <unistd.h>
 /**
  *三个模式：
  *无缓冲，行缓冲，全缓冲
@@ -10,10 +12,12 @@
 void setBuff();
 void streamPositioning();
 void streamError();
+void streamFmtOutput();
 int main() {
   // setBuff(); // 设置换缓冲模式测试缓冲流
   //  streamPositioning();
-  streamError();
+  //  streamError();
+  streamFmtOutput();
   return 0;
 }
 
@@ -105,4 +109,26 @@ void streamError() {
   printf("是否已经读完%s\n", feof(fpp) ? "YES" : "NO");
 
   fclose(fpp);
+}
+/**
+ * @brief直接写一个完整的例子演示
+ *
+ * 练习输出序号和日期到文件中
+ *
+ */
+void streamFmtOutput() {
+  time_t now_time = time(NULL);
+  struct tm *now = localtime(&now_time);
+
+  FILE *fp = fopen("file/time.txt", "w");
+  if (fp == NULL || ferror(fp)) {
+    perror("error");
+    return;
+  }
+  fprintf(fp, "%d年%d月%d日\n", now->tm_year + 1900, now->tm_mon + 1,
+          now->tm_mday);
+  fclose(fp);
+  printf("完成");
+
+  return;
 }

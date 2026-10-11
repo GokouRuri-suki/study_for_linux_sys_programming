@@ -125,7 +125,7 @@ void streamFmtOutput() {
     perror("error");
     return;
   }
-  fprintf(fp, "%d年%d月%d日\n", now->tm_year + 1900, now->tm_mon + 1,
+  fprintf(fp, "%d年%d月%d日", now->tm_year + 1900, now->tm_mon + 1,
           now->tm_mday);
   fclose(fp);
   printf("完成");

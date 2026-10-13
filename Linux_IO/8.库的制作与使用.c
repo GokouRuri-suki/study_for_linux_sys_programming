@@ -22,8 +22,9 @@
  *主要是static的静态库命令
 cd static
 gcc -Wall -c hello.c -o hello.o
-ar crs libhello.a hello.o
-gcc -Wall test.c -o test -L. -lhello
-./test
+ar rcs libhello.a hello.o
+nm libhello.a
+gcc -Wall main.c -o main -L. -lhello
+
  *
  */

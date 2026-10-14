@@ -28,3 +28,13 @@ gcc -Wall main.c -o main -L. -lhello
 
  *
  */
+
+/*动态库
+ *cd shared
+ *gcc -Wall -fPIC -c d_hello.c d_bye.c
+ *gcc -shared -o libcommon.so.1 d_hello.o d_bye.o
+ *ln -s libcommon.so.1 libcommon.so
+ *gcc d_test.c -o d_test -L. -lcommon  (-static)
+ * export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:../d_test
+ *
+ */

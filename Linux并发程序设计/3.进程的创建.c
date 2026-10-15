@@ -40,6 +40,6 @@ void father_child_process() {
 void exitAnd_exit() {
   printf("this process will exit");
   exit(0);
-  //_exit();
+  //_exit();不刷新
   printf("never be displayed\n");
 }

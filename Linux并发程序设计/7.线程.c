@@ -34,16 +34,35 @@
 调度单位是 task（LWP），资源归属单位是线程组；组长只是组里第一个 task
 
 
-*/
-#include <pthread.h>
+*/                                                                             \
+#include<pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
-void baseOprAboutThread();
-int main() { return 0; }
-void baseOprAboutThread() {
-  // 创建进程
 
-  return;
+char str[1024] = "hello world\0";
+void *fuc(void *arg);
+
+int main() {
+  pthread_t sid;
+  void *ret;
+  int is_suc = pthread_create(&sid, NULL, fuc, str);
+  if (is_suc != 0) {
+    printf("创建失败\n");
+    exit(-1);
+  }
+  pthread_join(sid, &ret);
+  printf("线程的执行结果为%s", (char *)ret);
+  return 0;
+}
+
+void *fuc(void *arg) {
+  char *retV = (char *)str;
+  memset(retV, 0, strlen(retV));
+  printf("这是线程 %u\n", getpid());
+  strcpy(retV, "yes u a right!\0");
+  printf("完成！准备结束释放\n");
+  pthread_exit(retV);
 }

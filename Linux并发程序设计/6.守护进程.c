@@ -45,6 +45,7 @@
 #include <unistd.h>
 
 void baseOprAboutDaemon();
+void creatTheDeamon();
 
 int main() {
   baseOprAboutDaemon();
@@ -105,4 +106,34 @@ void baseOprAboutDaemon() {
   }
   while (1)
     ;
+}
+
+void creatTheDeamon() {
+  pid_t sid, pid;
+  pid = fork();
+  if (pid < 0) {
+    perror("进程创建失败!");
+    exit(EXIT_FAILURE);
+  } else if (pid > 0) {
+    exit(EXIT_SUCCESS);
+  }
+  if ((sid = setsid()) < 0) {
+    perror("setsid error");
+    _exit(EXIT_FAILURE);
+  }
+  if (chdir("/") < 0) {
+    perror("chdir error");
+    _exit(EXIT_FAILURE);
+  }
+
+  if (umask(0) < 0) {
+    perror("umask erorr");
+    exit(EXIT_FAILURE);
+  }
+  for (int i = 0; i < getdtablesize(); i++) {
+    close(i);
+  }
+  while (1)
+    ;
+  return;
 }

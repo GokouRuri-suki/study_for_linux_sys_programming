@@ -20,7 +20,6 @@
 
 void *semFunc(void *arg);
 void baseOprAboutPV();
-
 char BUFF[1024] = {0};
 sem_t st;
 
